@@ -6,10 +6,10 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 interface TodoItemType {
 	todolist: Todolist
 	tasks: TaskType[]
-	deleteTask: (taskId: string) => void
+	deleteTask: (todoId: string, taskId: string) => void
 	changeFilter: (todoId: string, filters: FilterType) => void
-	createTask: (value: string) => void
-	changeTaskStatus: (taskId: string, checked: boolean) => void
+	createTask: (todoId: string, value: string) => void
+	changeTaskStatus: (todoId: string, taskId: string, checked: boolean) => void
 }
 
 export const TodolistItem = (
@@ -26,7 +26,7 @@ export const TodolistItem = (
 
 	const onCreateTask = () => {
 		if (inputValue.trim() !== "") {
-			createTask(inputValue.trim());
+			createTask(todolist.id, inputValue.trim());
 			setInputValue("");
 		} else {
 			setError('Title is required');
@@ -57,7 +57,7 @@ export const TodolistItem = (
 			</div>
 			{error && <div className='error-message'>{error}</div>}
 			{tasks.length === 0 ? (
-				<p>Tasks is not</p>
+				<p>No Tasks</p>
 			) : (
 				<ul>
 					{tasks.map(task => {
@@ -66,8 +66,8 @@ export const TodolistItem = (
 								  id={task.id}
 								  title={task.title}
 								  isDone={task.isDone}
-								  callback={() => deleteTask(task.id)}
-								  changeTaskStatus={changeTaskStatus}
+								  deleteTask={() => deleteTask(todolist.id, task.id)}
+								  changeTaskStatus={(checked: boolean) => changeTaskStatus(todolist.id, task.id, checked)}
 							/>
 						)
 					})}

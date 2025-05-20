@@ -1,24 +1,27 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent} from "react";
 
+export interface TasksType {
+	[todolistId: string]: TaskType[]
+}
 export interface TaskType {
 	id: string
 	title: string
 	isDone: boolean
-	callback?: (taskId: string) => void
-	changeTaskStatus?: (taskId: string, value: boolean) => void
+	deleteTask?: (taskId: string) => void
+	changeTaskStatus?: (checked: boolean) => void
 }
 
-export const Task = ({id, title, isDone, callback, changeTaskStatus}: TaskType) => {
+export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskType) => {
 	const onDeleteTask = () => {
-		if (callback) {
-			callback(id);
+		if (deleteTask) {
+			deleteTask(id);
 		}
 	}
 
 	const onChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
 		if (changeTaskStatus) {
-			changeTaskStatus(id, e.currentTarget.checked);
+			changeTaskStatus(e.currentTarget.checked);
 		}
 	}
 	return (
