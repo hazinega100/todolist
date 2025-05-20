@@ -22,7 +22,7 @@ export const Task = ({id, title, isDone, callback, changeTaskStatus}: TaskType) 
 		}
 	}
 	return (
-		<li>
+		<li className={isDone ? 'is-done' : ''}>
 			<input type="checkbox"
 				   checked={isDone}
 				   onChange={onChangeCheckbox}

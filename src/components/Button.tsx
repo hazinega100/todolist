@@ -1,11 +1,12 @@
 export interface IButton {
 	title: string
 	onClick?: () => void
+	className?: string
 }
 
-export const Button = ({title, onClick}: IButton) => {
+export const Button = ({title, onClick, className}: IButton) => {
 	return (
-		<button onClick={onClick}>
+		<button className={className} onClick={onClick}>
 			{title}
 		</button>
 	);
