@@ -1,27 +1,25 @@
 import {Task, TaskType} from "./Task.tsx";
 import {Button} from "./Button.tsx";
-import {FilterType} from "../App.tsx";
+import {FilterType, Todolist} from "../App.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 interface TodoItemType {
-	title: string
+	todolist: Todolist
 	tasks: TaskType[]
 	deleteTask: (taskId: string) => void
-	changeFilter: (filters: FilterType) => void
+	changeFilter: (todoId: string, filters: FilterType) => void
 	createTask: (value: string) => void
 	changeTaskStatus: (taskId: string, checked: boolean) => void
-	filter: FilterType
 }
 
 export const TodolistItem = (
 	{
-		title,
+		todolist,
 		tasks,
 		deleteTask,
 		changeFilter,
 		createTask,
-		changeTaskStatus,
-		filter
+		changeTaskStatus
 	}: TodoItemType) => {
 	const [inputValue, setInputValue] = useState<string>("")
 	const [error, setError] = useState<string | null>(null)
@@ -48,7 +46,7 @@ export const TodolistItem = (
 
 	return (
 		<div>
-			<h3>{title}</h3>
+			<h3>{todolist.title}</h3>
 			<div>
 				<input className={error ? 'error' : ''}
 					   value={inputValue}
@@ -76,15 +74,15 @@ export const TodolistItem = (
 				</ul>
 			)}
 			<div>
-				<Button className={filter === 'All' ? 'active-filter' : ''}
+				<Button className={todolist.filter === 'All' ? 'active-filter' : ''}
 						title={"All"}
-						onClick={() => changeFilter("All")}/>
-				<Button className={filter === 'Active' ? 'active-filter' : ''}
+						onClick={() => changeFilter(todolist.id, "All")}/>
+				<Button className={todolist.filter === 'Active' ? 'active-filter' : ''}
 						title={"Active"}
-						onClick={() => changeFilter("Active")}/>
-				<Button className={filter === 'Completed' ? 'active-filter' : ''}
+						onClick={() => changeFilter(todolist.id, "Active")}/>
+				<Button className={todolist.filter === 'Completed' ? 'active-filter' : ''}
 						title={"Completed"}
-						onClick={() => changeFilter("Completed")}/>
+						onClick={() => changeFilter(todolist.id, "Completed")}/>
 			</div>
 		</div>
 	);
