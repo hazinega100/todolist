@@ -33,12 +33,18 @@ export const App = () => {
 		setFilter(filter);
 	}
 
+	const createTask = (value: string) => {
+		const newTask = { id: v1(), title: value, isDone: false }
+		setTasks([...tasks, newTask]);
+	}
+
 	return (
 		<div className="app">
 			<TodolistItem title={"What to learn"}
 						  tasks={filteredTasks}
 						  deleteTask={deleteTask}
 						  changeFilter={changeFilter}
+						  createTask={createTask}
 			/>
 		</div>
 	)

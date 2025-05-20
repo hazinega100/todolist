@@ -8,7 +8,7 @@ export interface TaskType {
 }
 
 export const Task = ({id, title, isDone, callback}: TaskType) => {
-	const onHandlerDeleteTask = () => {
+	const onDeleteTask = () => {
 		if (callback) {
 			callback(id)
 		}
@@ -17,7 +17,7 @@ export const Task = ({id, title, isDone, callback}: TaskType) => {
 		<li>
 			<input type="checkbox" checked={isDone}/>
 			<span>{title}</span>
-			<Button onClick={onHandlerDeleteTask} title={"x"} />
+			<Button onClick={onDeleteTask} title={"x"} />
 		</li>
 	);
 };
