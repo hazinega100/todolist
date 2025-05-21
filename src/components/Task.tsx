@@ -1,7 +1,8 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent} from "react";
+import {EditableSpan} from "./EditableSpan.tsx";
 
-export interface TasksType {
+export interface TasksState {
 	[todolistId: string]: TaskType[]
 }
 export interface TaskType {
@@ -10,9 +11,11 @@ export interface TaskType {
 	isDone: boolean
 	deleteTask?: (taskId: string) => void
 	changeTaskStatus?: (checked: boolean) => void
+	changeTaskTitle?: (title: string) => void
 }
 
-export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskType) => {
+export const Task = (props: TaskType) => {
+	const {id, title, isDone, deleteTask, changeTaskStatus, changeTaskTitle} = props
 	const onDeleteTask = () => {
 		if (deleteTask) {
 			deleteTask(id);
@@ -30,7 +33,7 @@ export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskType
 				   checked={isDone}
 				   onChange={onChangeCheckbox}
 			/>
-			<span>{title}</span>
+			<EditableSpan value={title} onChange={changeTaskTitle}/>
 			<Button onClick={onDeleteTask} title={"x"} />
 		</li>
 	);
