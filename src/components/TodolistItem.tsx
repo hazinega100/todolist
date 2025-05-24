@@ -1,8 +1,14 @@
 import {Task, TaskType} from "./Task.tsx";
-import {Button} from "./Button.tsx";
 import {FilterType, Todolist} from "../App.tsx";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import List from '@mui/material/List'
+import Box from "@mui/material/Box";
+import {containerSx} from "../styles/TodolistItem.styles.ts";
+import React from "react";
 
 interface TodoItemType {
 	todolist: Todolist
@@ -16,7 +22,7 @@ interface TodoItemType {
 	changeTodolistTitle: (todoId: string, title: string) => void
 }
 
-export const TodolistItem = (props: TodoItemType) => {
+export const TodolistItem = React.memo((props: TodoItemType) => {
 	const {
 		todolist: {id, title, filter},
 		tasks,
@@ -44,16 +50,18 @@ export const TodolistItem = (props: TodoItemType) => {
 	return (
 		<div>
 			<div className={'container'}>
-				<h3>
+				<h3 className='todolist-title'>
 					<EditableSpan value={title} onChange={onChangeTodolistTitle}/>
 				</h3>
-				<Button title={'x'} onClick={onDeleteTodolist}/>
+				<IconButton onClick={onDeleteTodolist}>
+					<DeleteIcon/>
+				</IconButton>
 			</div>
 			<CreateItemForm onCreateItem={createTaskHandler}/>
 			{tasks.length === 0 ? (
 				<p>No Tasks</p>
 			) : (
-				<ul>
+				<List key={id}>
 					{tasks.map(task => {
 						return (
 							<Task key={task.id}
@@ -66,19 +74,21 @@ export const TodolistItem = (props: TodoItemType) => {
 							/>
 						)
 					})}
-				</ul>
+				</List>
 			)}
 			<div>
-				<Button className={filter === 'All' ? 'active-filter' : ''}
-						title={"All"}
-						onClick={() => changeFilter(id, "All")}/>
-				<Button className={filter === 'Active' ? 'active-filter' : ''}
-						title={"Active"}
-						onClick={() => changeFilter(id, "Active")}/>
-				<Button className={filter === 'Completed' ? 'active-filter' : ''}
-						title={"Completed"}
-						onClick={() => changeFilter(id, "Completed")}/>
+				<Box sx={containerSx}>
+					<Button variant={filter === 'All' ? 'outlined' : 'text'}
+							color={"info"}
+							onClick={() => changeFilter(id, "All")}>All</Button>
+					<Button variant={filter === 'Active' ? 'outlined' : 'text'}
+							color={"error"}
+							onClick={() => changeFilter(id, "Active")}>Active</Button>
+					<Button variant={filter === 'Completed' ? 'outlined' : 'text'}
+							color={"success"}
+							onClick={() => changeFilter(id, "Completed")}>Completed</Button>
+				</Box>
 			</div>
 		</div>
 	);
-};
+})
