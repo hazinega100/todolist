@@ -1,5 +1,5 @@
 import {Task, TaskType} from "./Task.tsx";
-import {FilterType, Todolist} from "../App.tsx";
+import {FilterType, Todolist} from "../app/App.tsx";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
 import DeleteIcon from "@mui/icons-material/Delete";
