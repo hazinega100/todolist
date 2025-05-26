@@ -2,13 +2,11 @@ import {beforeEach, test, expect} from "vitest";
 import {
 	changeTaskStatusAC, changeTaskTitleAC,
 	createTaskAC,
-	createTodolistTasksAC,
 	deleteTasksAC,
-	deleteTodolistTasksAC,
 	tasksReducer
 } from "./tasks-reducer.ts";
 import {TasksState} from "../components/Task.tsx";
-import {todolistId} from "./todolists-reducer.ts";
+import {createTodolistAC, deleteTodolistAC, todolistId} from "./todolists-reducer.ts";
 
 let startState: TasksState = {}
 
@@ -29,12 +27,12 @@ beforeEach(() => {
 
 test('array should be created for new todolist', () => {
 
-	const endState = tasksReducer(startState, createTodolistTasksAC(todolistId));
+	const endState = tasksReducer(startState, createTodolistAC(todolistId));
 	expect(endState[todolistId].length).toBe(0)
 })
 
 test('delete todolist and tasks', () => {
-	const endState = tasksReducer(startState, deleteTodolistTasksAC('todolistId2'));
+	const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'));
 	const keys = Object.keys(endState)
 
 	expect(keys.length).toBe(1)
