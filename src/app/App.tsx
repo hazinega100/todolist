@@ -58,27 +58,27 @@ export const App = React.memo(() => {
 	}
 
 	const changeTaskTitle = (todoId: string, taskId: string, title: string) => {
-		dispatch(changeTaskTitleAC(todoId, taskId, title))
+		dispatch(changeTaskTitleAC({todoId, taskId, title}))
 	}
 
 	const deleteTask = (todoId: string, taskId: string) => {
-		dispatch(deleteTasksAC(todoId, taskId));
+		dispatch(deleteTasksAC({todoId, taskId}));
 	}
 
 	const changeFilter = (todoId: string, filter: FilterType) => {
-		dispatch(changeTodolistFilterAC(todoId, filter));
+		dispatch(changeTodolistFilterAC({todoId, filter}));
 	}
 
 	const createTask = (todoId: string, value: string) => {
 		dispatch(createTaskAC(todoId, value));
 	}
 
-	const changeTaskStatus = (todoId: string, taskId: string, checked: boolean) => {
-		dispatch(changeTaskStatusAC(todoId, taskId, checked));
+	const changeTaskStatus = (todoId: string, taskId: string, isDone: boolean) => {
+		dispatch(changeTaskStatusAC({todoId, taskId, isDone}));
 	}
 
 	const deleteTodolist = (todoId: string) => {
-		dispatch(deleteTodolistAC(todoId))
+		dispatch(deleteTodolistAC({id: todoId}))
 	}
 
 	const createTodolist = (title: string) => {
@@ -86,7 +86,7 @@ export const App = React.memo(() => {
 	}
 
 	const changeTodolistTitle = (todoId: string, title: string) => {
-		dispatch(changeTodolistTitleAC(todoId, title))
+		dispatch(changeTodolistTitleAC({todoId, title}))
 	}
 
 	return (

@@ -32,7 +32,7 @@ test('array should be created for new todolist', () => {
 })
 
 test('delete todolist and tasks', () => {
-	const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'));
+	const endState = tasksReducer(startState, deleteTodolistAC({id: 'todolistId2'}));
 	const keys = Object.keys(endState)
 
 	expect(keys.length).toBe(1)
@@ -49,14 +49,14 @@ test('create task', () => {
 })
 
 test('delete task', () => {
-	const endState = tasksReducer(startState, deleteTasksAC('todolistId2', '3'));
+	const endState = tasksReducer(startState, deleteTasksAC({todoId: 'todolistId2',taskId: '3'}));
 
 	expect(endState['todolistId2'][2]).toBeUndefined()
 	expect(endState['todolistId2'].length).toBe(2)
 })
 
 test('change task status', () => {
-	const endState = tasksReducer(startState, changeTaskStatusAC('todolistId2', '3', true))
+	const endState = tasksReducer(startState, changeTaskStatusAC({todoId: 'todolistId2',taskId: '3',isDone: true}))
 
 	expect(endState['todolistId2'][2].isDone).toBe(true)
 	expect(endState['todolistId2'][0].isDone).toBe(false)
@@ -64,7 +64,7 @@ test('change task status', () => {
 
 test('correct task should change its title', () => {
 	const title = 'new task';
-	const endState = tasksReducer(startState, changeTaskTitleAC('todolistId2', '3', title));
+	const endState = tasksReducer(startState, changeTaskTitleAC({todoId: 'todolistId2',taskId: '3',title: title}));
 
 	expect(endState['todolistId2'][2].title).toBe(title)
 })
